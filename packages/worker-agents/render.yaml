@@ -1,0 +1,75 @@
+# Pattern 2 — Worker agents. Web + Background Worker + Valkey + Postgres.
+# Deploy from the repo root (rootDir: ../..) so the npm workspaces resolve.
+
+databases:
+  - name: worker-agents-db
+    plan: basic-256mb
+    region: oregon
+    postgresMajorVersion: "17"
+
+services:
+  # Shared queue + progress bus.
+  - type: keyvalue
+    name: worker-agents-valkey
+    plan: starter
+    region: oregon
+    maxmemoryPolicy: noeviction
+    ipAllowList: []
+
+  # Producer: enqueues jobs, serves the UI, streams progress.
+  - type: web
+    name: worker-agents-web
+    runtime: node
+    region: oregon
+    plan: starter
+    rootDir: ../..
+    buildCommand: npm install
+    startCommand: npm run start --workspace @workshop/worker-agents
+    healthCheckPath: /healthz
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: worker-agents-db
+          property: connectionString
+      - key: REDIS_URL
+        fromService:
+          name: worker-agents-valkey
+          type: keyvalue
+          property: connectionString
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: GITHUB_TOKEN
+        sync: false
+      - key: NODE_ENV
+        value: production
+
+  # Consumer: runs the agent. Scale `numInstances` up to fan out across PRs.
+  - type: worker
+    name: worker-agents-worker
+    runtime: node
+    region: oregon
+    plan: starter
+    numInstances: 1
+    rootDir: ../..
+    buildCommand: npm install
+    startCommand: npm run start:worker --workspace @workshop/worker-agents
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: worker-agents-db
+          property: connectionString
+      - key: REDIS_URL
+        fromService:
+          name: worker-agents-valkey
+          type: keyvalue
+          property: connectionString
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: GITHUB_TOKEN
+        sync: false
+      - key: NODE_ENV
+        value: production

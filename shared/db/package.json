@@ -1,0 +1,20 @@
+{
+  "name": "@workshop/db",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Postgres telemetry store: reviews, findings, and agent spans. The durable record the UI reads.",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@workshop/agent": "*",
+    "pg": "^8.13.1"
+  },
+  "devDependencies": {
+    "@types/pg": "^8.11.10"
+  }
+}

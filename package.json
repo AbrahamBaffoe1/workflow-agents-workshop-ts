@@ -1,0 +1,28 @@
+{
+  "name": "render-agents-workshop",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "One agentic code-review use case, three Render execution substrates: in-process, worker+queue, and Workflows.",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "workspaces": [
+    "shared/*",
+    "packages/naive-agent",
+    "packages/worker-agents",
+    "packages/workflow-agents"
+  ],
+  "scripts": {
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "naive:dev": "npm run dev --workspace @workshop/naive-agent",
+    "worker:web": "npm run web --workspace @workshop/worker-agents",
+    "worker:worker": "npm run worker --workspace @workshop/worker-agents"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "tsx": "^4.20.5",
+    "typescript": "^5.6.3"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "name": "@workshop/ui",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "A mountable telemetry viewer (Hono router): a table of reviews with drill-in to findings and agent spans.",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@workshop/db": "*",
+    "hono": "^4.6.14"
+  }
+}

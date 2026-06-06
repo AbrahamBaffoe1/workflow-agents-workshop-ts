@@ -1,0 +1,22 @@
+{
+  "name": "@workshop/workflow-agents",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Pattern 3 — the same shared agents, run as Render Workflow tasks (per-agent isolation, retries, traces).",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "dev": "node --env-file-if-exists=.env --import tsx src/server.ts",
+    "dev:workflows": "render workflows dev -- npm run dev",
+    "start": "node --import tsx src/server.ts",
+    "start:workflow": "node --import tsx src/workflow.ts"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.13.7",
+    "@renderinc/sdk": "^0.5.0",
+    "@workshop/agent": "*",
+    "@workshop/db": "*",
+    "@workshop/ui": "*",
+    "hono": "^4.6.14"
+  }
+}

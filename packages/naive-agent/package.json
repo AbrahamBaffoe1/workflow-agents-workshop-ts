@@ -1,0 +1,19 @@
+{
+  "name": "@workshop/naive-agent",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Pattern 1 — the code-review agent running in-process inside a single web service.",
+  "scripts": {
+    "dev": "node --env-file-if-exists=.env --import tsx src/server.ts",
+    "start": "node --import tsx src/server.ts",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.13.7",
+    "@workshop/agent": "*",
+    "@workshop/db": "*",
+    "@workshop/ui": "*",
+    "hono": "^4.6.14"
+  }
+}

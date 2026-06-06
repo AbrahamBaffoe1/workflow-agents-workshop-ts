@@ -1,0 +1,43 @@
+/** Row shapes for the telemetry store, shared by the pg and memory backends. */
+
+export interface ReviewRow {
+  id: string
+  pr_url: string
+  status: string
+  verdict: string | null
+  reason: string | null
+  input_tokens: number
+  output_tokens: number
+  created_at: string
+  updated_at: string
+}
+
+export interface ReviewResultUpdate {
+  status: 'done' | 'error'
+  verdict?: string
+  reason?: string
+  inputTokens?: number
+  outputTokens?: number
+}
+
+export interface FindingRow {
+  id: number
+  review_id: string
+  agent: string
+  note: string
+  created_at: string
+}
+
+export interface SpanRow {
+  span_id: string
+  run_id: string
+  parent_span_id: string | null
+  name: string
+  kind: string
+  status: string
+  input: unknown
+  output: unknown
+  error: string | null
+  started_at: string
+  ended_at: string | null
+}
