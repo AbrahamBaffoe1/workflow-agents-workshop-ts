@@ -7,6 +7,12 @@
 
 set -e
 
+if [ -f ".env" ]; then
+  set -a
+  . "./.env"
+  set +a
+fi
+
 PORT="${RENDER_DEV_PORT:-8120}"
 DEV_URL="http://127.0.0.1:${PORT}"
 
